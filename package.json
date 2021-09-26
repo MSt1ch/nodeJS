@@ -1,0 +1,19 @@
+{
+  "name": "nodejs",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/MSt1ch/nodejs.git",
+  "author": "Stanislau Matsiyeuski <Stanislau_Matsiyeuski@epam.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "nodemon": "2.0.13"
+  },
+  "type": "module",
+  "scripts": {
+    "reverseTask": "nodemon ./reverseTask.js"
+  },
+  "engines": {
+    "node": "^16.9.1",
+    "npm": "^7.21.1"
+  }
+}
