@@ -10,10 +10,14 @@
   },
   "type": "module",
   "scripts": {
-    "reverseTask": "nodemon ./reverseTask.js"
+    "reverseTask": "nodemon ./reverseTask.js",
+    "convertTask": "nodemon ./convertTask.js"
   },
   "engines": {
     "node": "^16.9.1",
     "npm": "^7.21.1"
+  },
+  "dependencies": {
+    "csvtojson": "2.0.10"
   }
 }

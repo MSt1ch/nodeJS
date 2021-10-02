@@ -10,3 +10,11 @@ Task 1.
     !For running use command!:
     
     `yarn && yarn reverseTask`
+
+Task 2, 3.
+
+    !For running use command!:
+    
+    `yarn && yarn convertTask`
+
+    and check files in the 'files' folder.
