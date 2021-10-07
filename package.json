@@ -1,0 +1,28 @@
+{
+  "name": "nodejs",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/MSt1ch/nodejs.git",
+  "author": "Stanislau Matsiyeuski <Stanislau_Matsiyeuski@epam.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/cli": "7.15.7",
+    "@babel/core": "7.15.5",
+    "@babel/node": "7.15.4",
+    "@babel/plugin-transform-runtime": "7.15.0",
+    "@babel/preset-env": "7.15.6",
+    "nodemon": "2.0.13"
+  },
+  "type": "module",
+  "scripts": {
+    "reverseTask": "nodemon --exec babel-node ./reverseTask.js",
+    "convertTask": "nodemon --exec babel-node ./convertTask.js"
+  },
+  "engines": {
+    "node": "^16.9.1",
+    "npm": "^7.21.1"
+  },
+  "dependencies": {
+    "csvtojson": "2.0.10"
+  }
+}
