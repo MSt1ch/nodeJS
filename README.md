@@ -17,4 +17,4 @@ Task 2, 3.
     
     `yarn && yarn convertTask`
 
-    and check files in the 'files' folder.
+    and check files in the 'txt' folder.

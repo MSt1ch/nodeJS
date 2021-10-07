@@ -8,21 +8,21 @@ import { fileURLToPath } from 'url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-const filePath = path.join(__dirname, 'files/nodejs-hw1-ex1.csv');
+const filePath = path.join(__dirname, 'csv/nodejs-hw1-ex1.csv');
 
-const jsonArray = await csv().fromFile(filePath);
+const jsonArray = await csv({ delimiter: ';' }).fromFile(filePath);
 
-writeFile('files/hw1-fully-loaded-into-the-ram.txt', `${JSON.stringify(jsonArray)}`, (err) => {
+writeFile('txt/hw1-fully-loaded-into-the-ram.txt', `${JSON.stringify(jsonArray)}`, (err) => {
     if (err) console.log(err);
 })
 
 // 1.3 using streams
 
 const readStream = createReadStream(filePath);
-const writeStream = createWriteStream('files/hw1-using-streams.txt', 'utf8');
+const writeStream = createWriteStream('txt/hw1-using-streams.txt', 'utf8');
 
 readStream
-    .pipe(csv())
+    .pipe(csv({ delimiter: ';' }))
     .on('error', error => console.log(error.message))
     .pipe(writeStream)
     .on('error', error => console.log(error.message));
