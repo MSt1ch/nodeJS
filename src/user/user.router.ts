@@ -1,13 +1,15 @@
 import {Router} from 'express';
-import {create, getAll, getOne, remove, update} from '../user/user.controller';
+import {create, getAll, getOne, remove, update, getAutoSuggestUsers} from '../user/user.controller';
 import {createValidator} from 'express-joi-validation';
-import {bodyUserSchema} from '../user/user.schema';
+import {bodyUserSchema, queryUserSchema} from '../user/user.schema';
 
 const validator = createValidator();
 
-const usersRouter = Router();
+const usersRouter = Router({caseSensitive: false});
 
 usersRouter.get('/', getAll);
+
+usersRouter.get('/getautosuggestusers', validator.query(queryUserSchema, {joi: {convert: true, allowUnknown: false}}), getAutoSuggestUsers);
 
 usersRouter.get('/:id', getOne);
 
@@ -16,6 +18,5 @@ usersRouter.post('/', validator.body(bodyUserSchema, {joi: {convert: true, allow
 usersRouter.put('/:id', validator.body(bodyUserSchema, {joi: {convert: true, allowUnknown: false}}), update);
 
 usersRouter.delete('/:id', remove);
-
 
 export default usersRouter;

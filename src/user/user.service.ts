@@ -1,7 +1,7 @@
 import {v4 as uuid} from 'uuid';
 
 import usersData from '../user/data.memory';
-import {BaseUser, User} from 'user/user.interface';
+import {BaseUser, UpdateUser, User} from 'user/user.interface';
 
 let dataMemory = usersData;
 
@@ -20,7 +20,7 @@ export const create = async (newUser: BaseUser): Promise<User> => {
   return createdUser;
 };
 
-export const update = async (id: string, userUpdate: BaseUser): Promise<User | null> => {
+export const update = async (id: string, userUpdate: UpdateUser): Promise<User | null> => {
   const user = await findById(id);
 
   if (!user) {
@@ -29,7 +29,7 @@ export const update = async (id: string, userUpdate: BaseUser): Promise<User | n
 
   const newUser = {...user, ...userUpdate};
 
-  dataMemory = dataMemory.map((userItem) => (userItem.id === id ? newUser : user));
+  dataMemory = dataMemory.map((userItem) => (userItem.id === id ? newUser : userItem));
 
   return newUser;
 };

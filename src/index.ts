@@ -17,6 +17,7 @@ app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
 });
 
+app.set('case sensitive routing', false);
 app.use(express.json());
 app.use(validationErrorHandler);
 app.use('/api/users', usersRouter);
