@@ -4,7 +4,7 @@ import {OK, INTERNAL_SERVER_ERROR, NOT_FOUND, CREATED, NO_CONTENT} from 'http-st
 
 import _ from 'lodash';
 
-import {BaseUser, User} from 'user/user.interface';
+import {BaseUser, User, UserInstance} from 'user/user.interface';
 import {UserQuerySchema, UserRequestSchema} from 'user/user.schema';
 
 import * as UserService from '../user/user.service';
@@ -24,10 +24,10 @@ export const getOne = async (req: Request, res: Response) => {
   const id: string = req.params.id;
 
   try {
-    const user: User = await UserService.findOne(id);
+    const user: UserInstance | null = await UserService.findOne(id);
 
     if (user) {
-      return res.status(OK).send(user);
+      return res.status(OK).send(user.toJSON());
     }
 
     res.status(NOT_FOUND).send('User not found');

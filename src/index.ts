@@ -2,12 +2,15 @@ import * as dotenv from 'dotenv';
 import express from 'express';
 import usersRouter from './user/user.router';
 import {validationErrorHandler} from './utils/validation';
+import sq from './utils/sequelize';
 
 dotenv.config();
 
 if (!process.env.PORT) {
   process.exit(1);
 }
+
+sq.sync().then(() => console.log('ok'));
 
 const PORT: number = parseInt(process.env.PORT as string, 10);
 

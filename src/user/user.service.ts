@@ -1,41 +1,42 @@
 import {v4 as uuid} from 'uuid';
 
-import usersData from '../user/data.memory';
-import {BaseUser, UpdateUser, User} from 'user/user.interface';
+import {BaseUser, UpdateUser, User, UserInstance} from 'user/user.interface';
+import {UserModel} from '../user/user.model';
 
-let dataMemory = usersData;
 
-export const findAll = async (): Promise<User[]> => dataMemory;
+export const findAll = async (): Promise<UserInstance[]> => await UserModel.findAll();
 
-export const findById = async (id: string): Promise<User> => dataMemory.find((user) => user.id === id) as User;
+export const findOne = async (id: string): Promise<UserInstance | null> => await UserModel.findByPk(id);
 
-export const findOne = async (id: string): Promise<User> => findById(id);
-
-export const create = async (newUser: BaseUser): Promise<User> => {
+export const create = async (newUser: BaseUser): Promise<UserInstance | null> => {
   const id = uuid();
   const createdUser: User = {id, ...newUser, isDeleted: false};
 
-  dataMemory.push(createdUser);
+  const userInstance = await UserModel.create(createdUser);
 
-  return createdUser;
+  return userInstance;
 };
 
 export const update = async (id: string, userUpdate: UpdateUser): Promise<User | null> => {
-  const user = await findById(id);
+  const user = await findOne(id);
 
   if (!user) {
     return null;
   }
 
   const newUser = {...user, ...userUpdate};
+  const [_, userList] = await UserModel.update({...newUser}, {
+    where: {
+      id: user.id,
+    },
+    returning: true,
+  });
 
-  dataMemory = dataMemory.map((userItem) => (userItem.id === id ? newUser : userItem));
-
-  return newUser;
+  return userList[0];
 };
 
 export const remove = async (id: string): Promise<null | void> => {
-  const user = await findById(id);
+  const user = await findOne(id);
 
   if (!user) {
     return null;
@@ -44,6 +45,9 @@ export const remove = async (id: string): Promise<null | void> => {
 
   const newUser = {...user, isDeleted: true};
 
-  dataMemory = dataMemory.map((userItem) => (userItem.id === id ? newUser : userItem));
+  await UserModel.update(newUser, {where: {
+    id: user.id,
+  }});
+
   return;
 };

@@ -1,3 +1,5 @@
+import {Model} from 'sequelize';
+
 export interface BaseUser {
     login: string;
     password: string;
@@ -11,4 +13,12 @@ export interface User extends BaseUser {
 
 export interface UpdateUser extends BaseUser {
     isDeleted?: boolean;
+}
+
+export interface UserInstance extends Model {
+    id: string;
+    login: string;
+    password: string;
+    age: number;
+    isDeleted: boolean;
 }
