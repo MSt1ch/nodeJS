@@ -8,7 +8,7 @@ export interface BaseUser {
 
 export interface User extends BaseUser {
     id: string;
-    isDeleted: boolean;
+    isDeleted?: boolean;
 }
 
 export interface UpdateUser extends BaseUser {

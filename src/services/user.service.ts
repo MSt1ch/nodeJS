@@ -1,12 +1,13 @@
 import {v4 as uuid} from 'uuid';
 
-import {BaseUser, UpdateUser, User, UserInstance} from 'user/user.interface';
-import {UserModel} from '../user/user.model';
+import {BaseUser, UpdateUser, User, UserInstance} from 'types/user';
+import {User as UserModel} from '../models/user';
 
+export const findAll = async (): Promise<UserInstance[]> => await UserModel
+    .findAll({attributes: {exclude: ['isDeleted']}, where: {isDeleted: false}});
 
-export const findAll = async (): Promise<UserInstance[]> => await UserModel.findAll();
-
-export const findOne = async (id: string): Promise<UserInstance | null> => await UserModel.findByPk(id);
+export const findOne = async (id: string): Promise<UserInstance | null> => await UserModel
+    .findByPk(id, {attributes: {exclude: ['isDeleted']}});
 
 export const create = async (newUser: BaseUser): Promise<UserInstance | null> => {
   const id = uuid();

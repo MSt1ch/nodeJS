@@ -1,6 +1,6 @@
 import * as dotenv from 'dotenv';
 import express from 'express';
-import usersRouter from './user/user.router';
+import usersRouter from './routes/user.router';
 import {validationErrorHandler} from './utils/validation';
 import sq from './utils/sequelize';
 

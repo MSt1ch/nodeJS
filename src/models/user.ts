@@ -1,8 +1,8 @@
 import {DataTypes} from 'sequelize';
 import sq from '../utils/sequelize';
-import {UserInstance} from './user.interface';
+import {UserInstance} from 'types/user';
 
-export const UserModel = sq.define<UserInstance>('users', {
+export const User = sq.define<UserInstance>('users', {
   id: {
     primaryKey: true,
     type: new DataTypes.STRING(255),

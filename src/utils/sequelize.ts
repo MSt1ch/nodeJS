@@ -1,7 +1,7 @@
 import {Sequelize} from 'sequelize';
-import pgConfig from '../../config/pgConfig';
+import pgConfig from '../config/pgConfig';
 
-const sq = new Sequelize({
+export const sq = new Sequelize({
   ...pgConfig,
   dialect: 'postgres',
 });

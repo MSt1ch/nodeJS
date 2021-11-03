@@ -1,7 +1,8 @@
 import {Router} from 'express';
-import {create, getAll, getOne, remove, update, getAutoSuggestUsers} from '../user/user.controller';
 import {createValidator} from 'express-joi-validation';
-import {bodyUserSchema, queryUserSchema} from '../user/user.schema';
+
+import {create, getAll, getOne, remove, update, getAutoSuggestUsers} from '../controllers/user.controller';
+import {bodyUserSchema, queryUserSchema} from '../validations/user.schema';
 
 const validator = createValidator();
 
