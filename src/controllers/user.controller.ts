@@ -4,10 +4,10 @@ import {OK, INTERNAL_SERVER_ERROR, NOT_FOUND, CREATED, NO_CONTENT} from 'http-st
 
 import _ from 'lodash';
 
-import {BaseUser, User} from 'user/user.interface';
-import {UserQuerySchema, UserRequestSchema} from 'user/user.schema';
+import {BaseUser, User, UserInstance} from '../types/user';
+import {UserQuerySchema, UserRequestSchema} from 'validations/user.schema';
 
-import * as UserService from '../user/user.service';
+import * as UserService from '../services/user.service';
 
 export const getAll = async (req: Request, res: Response) => {
   try {
@@ -24,10 +24,10 @@ export const getOne = async (req: Request, res: Response) => {
   const id: string = req.params.id;
 
   try {
-    const user: User = await UserService.findOne(id);
+    const user: UserInstance | null = await UserService.findOne(id);
 
     if (user) {
-      return res.status(OK).send(user);
+      return res.status(OK).send(user.toJSON());
     }
 
     res.status(NOT_FOUND).send('User not found');
@@ -83,7 +83,7 @@ export const getAutoSuggestUsers = async (req: ValidatedRequest<UserQuerySchema>
   try {
     const users: User[] = await UserService.findAll();
 
-    const filteredUsers = users.filter(({login}) => login.includes(loginsubstring.toLowerCase()));
+    const filteredUsers = users.filter(({login}) => login.toLowerCase().includes(loginsubstring.toLowerCase()));
     const sortedUsers = _.sortBy(filteredUsers, ['login']);
 
     if (users) {
