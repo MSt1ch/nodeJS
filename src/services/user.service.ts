@@ -26,6 +26,7 @@ export const update = async (id: string, userUpdate: UpdateUser): Promise<User |
   }
 
   const newUser = {...user, ...userUpdate};
+  // eslint-disable-next-line no-unused-vars
   const [_, userList] = await UserModel.update({...newUser}, {
     where: {
       id: user.id,
