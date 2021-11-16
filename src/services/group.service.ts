@@ -2,6 +2,7 @@ import {v4 as uuid} from 'uuid';
 
 import {BaseGroup, Group, GroupInstance} from 'types/group';
 import {Group as GroupModel} from '../models/group';
+import sq from '../utils/sequelize';
 
 export const findAll = async (): Promise<GroupInstance[]> => await GroupModel
     .findAll();
@@ -46,6 +47,13 @@ export const remove = async (id: string): Promise<null | void> => {
   if (!group) {
     return null;
   }
+
+  await sq.model('user_groups').destroy({
+    where: {
+      group_id: id,
+    },
+  });
+
   await GroupModel.destroy({
     where: {
       id,

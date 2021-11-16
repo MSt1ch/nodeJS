@@ -98,3 +98,13 @@ export const getAutoSuggestUsers = async (req: ValidatedRequest<UserQuerySchema>
   }
 };
 
+export const addUsersToGroup = async (req: Request, res: Response) => {
+  const {userIds, groupId} = req.body;
+
+  UserService.addUsersToGroup(userIds, groupId).then(() => {
+    res.status(OK).send();
+  }).catch((e) => {
+    res.status(INTERNAL_SERVER_ERROR).send((e as Error).message);
+  });
+};
+
