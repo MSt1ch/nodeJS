@@ -21,6 +21,8 @@ export default {
   down: async (queryInterface: QueryInterface) => {
     // @ts-ignore
     await queryInterface.bulkDelete('groups', null, {});
+    // @ts-ignore
+    await queryInterface.bulkDelete('user_groups', null, {});
     return process.exit();
   },
 };

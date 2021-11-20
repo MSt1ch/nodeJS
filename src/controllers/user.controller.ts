@@ -6,6 +6,7 @@ import _ from 'lodash';
 
 import {BaseUser, User, UserInstance} from '../types/user';
 import {UserQuerySchema, UserRequestSchema} from 'validations/user.schema';
+import {UsersToGroupRequestSchema} from 'validations/group.schema';
 
 import * as UserService from '../services/user.service';
 
@@ -98,13 +99,17 @@ export const getAutoSuggestUsers = async (req: ValidatedRequest<UserQuerySchema>
   }
 };
 
-export const addUsersToGroup = async (req: Request, res: Response) => {
+export const addUsersToGroup = async (req: ValidatedRequest<UsersToGroupRequestSchema>, res: Response) => {
   const {userIds, groupId} = req.body;
 
-  UserService.addUsersToGroup(userIds, groupId).then(() => {
-    res.status(OK).send();
-  }).catch((e) => {
+  try {
+    UserService.addUsersToGroup(userIds, groupId).then(() => {
+      res.status(OK).send();
+    }).catch((e) => {
+      res.status(INTERNAL_SERVER_ERROR).send((e as Error).message);
+    });
+  } catch (e) {
     res.status(INTERNAL_SERVER_ERROR).send((e as Error).message);
-  });
+  }
 };
 

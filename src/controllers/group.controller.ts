@@ -1,6 +1,9 @@
 import {Request, Response} from 'express';
-import {BaseGroup, Group, GroupInstance} from 'types/group';
+import {ValidatedRequest} from 'express-joi-validation';
 import {CREATED, INTERNAL_SERVER_ERROR, NO_CONTENT, NOT_FOUND, OK} from 'http-status';
+
+import {BaseGroup, Group, GroupInstance} from 'types/group';
+import {GroupRequestSchema} from 'validations/group.schema';
 
 import * as GroupService from '../services/group.service';
 
@@ -30,7 +33,7 @@ export const getOne = async (req: Request, res: Response) => {
   }
 };
 
-export const create = async (req: Request, res: Response) => {
+export const create = async (req: ValidatedRequest<GroupRequestSchema>, res: Response) => {
   try {
     const group = req.body;
 
@@ -42,7 +45,7 @@ export const create = async (req: Request, res: Response) => {
   }
 };
 
-export const update = async (req: Request, res: Response) => {
+export const update = async (req: ValidatedRequest<GroupRequestSchema>, res: Response) => {
   try {
     const {body: group, params: {id}} = req;
 
