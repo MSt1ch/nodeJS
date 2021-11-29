@@ -6,6 +6,7 @@ import _ from 'lodash';
 
 import {BaseUser, User, UserInstance} from '../types/user';
 import {UserQuerySchema, UserRequestSchema} from 'validations/user.schema';
+import {UsersToGroupRequestSchema} from 'validations/group.schema';
 
 import * as UserService from '../services/user.service';
 
@@ -40,7 +41,7 @@ export const create = async (req: ValidatedRequest<UserRequestSchema>, res: Resp
   try {
     const user = req.body;
 
-    const newUser = await UserService.create(user as User);
+    const newUser = await UserService.create(user as BaseUser);
 
     res.status(CREATED).send(newUser);
   } catch (e) {
@@ -69,9 +70,13 @@ export const update = async (req: ValidatedRequest<UserRequestSchema>, res: Resp
 export const remove = async (req: Request, res: Response) => {
   try {
     const id: string = req.params.id;
-    await UserService.remove(id);
+    const existingUser = await UserService.findOne(id);
 
-    res.sendStatus(NO_CONTENT);
+    if (existingUser) {
+      await UserService.remove(id);
+      return res.sendStatus(NO_CONTENT);
+    }
+    return res.status(NOT_FOUND).send('User not found');
   } catch (e) {
     res.status(INTERNAL_SERVER_ERROR).send((e as Error).message);
   }
@@ -89,6 +94,20 @@ export const getAutoSuggestUsers = async (req: ValidatedRequest<UserQuerySchema>
     if (users) {
       res.status(OK).send(sortedUsers.slice(0, limit));
     }
+  } catch (e) {
+    res.status(INTERNAL_SERVER_ERROR).send((e as Error).message);
+  }
+};
+
+export const addUsersToGroup = async (req: ValidatedRequest<UsersToGroupRequestSchema>, res: Response) => {
+  const {userIds, groupId} = req.body;
+
+  try {
+    UserService.addUsersToGroup(userIds, groupId).then(() => {
+      res.status(OK).send();
+    }).catch((e) => {
+      res.status(INTERNAL_SERVER_ERROR).send((e as Error).message);
+    });
   } catch (e) {
     res.status(INTERNAL_SERVER_ERROR).send((e as Error).message);
   }

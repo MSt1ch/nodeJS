@@ -37,6 +37,7 @@ export default {
     return process.exit();
   },
   down: async (queryInterface: QueryInterface) => {
+    // @ts-ignore
     await queryInterface.bulkDelete('users', null, {});
     return process.exit();
   },
