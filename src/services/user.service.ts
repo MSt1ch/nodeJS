@@ -6,7 +6,7 @@ import {Group as GroupModel} from '../models/group';
 import sq from '../utils/sequelize';
 
 export const findAll = async (): Promise<UserInstance[]> => await UserModel
-    .findAll({attributes: {exclude: ['isDeleted']}, where: {isDeleted: false}});
+    .findAll({attributes: {exclude: ['isDeleted']}, where: {isDeleted: false}, logging: console.log});
 
 export const findOne = async (id: string): Promise<UserInstance | null> => await UserModel
     .findByPk(id, {attributes: {exclude: ['isDeleted']}});
