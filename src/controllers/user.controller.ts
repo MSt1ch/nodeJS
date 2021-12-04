@@ -1,3 +1,4 @@
+import {handleError} from '../error-hander/errorHandlers';
 import {Request, Response} from 'express';
 import {ValidatedRequest} from 'express-joi-validation';
 import {OK, INTERNAL_SERVER_ERROR, NOT_FOUND, CREATED, NO_CONTENT} from 'http-status';
@@ -13,10 +14,10 @@ import * as UserService from '../services/user.service';
 export const getAll = async (req: Request, res: Response) => {
   try {
     const users: User[] = await UserService.findAll();
-
     res.status(OK).send(users);
-  } catch (e) {
-    res.status(INTERNAL_SERVER_ERROR).send((e as Error).message);
+  } catch (error) {
+    handleError(error as Error, req, res);
+    res.status(INTERNAL_SERVER_ERROR).send((error as Error).message);
   }
 };
 
@@ -32,8 +33,9 @@ export const getOne = async (req: Request, res: Response) => {
     }
 
     res.status(NOT_FOUND).send('User not found');
-  } catch (e) {
-    res.status(INTERNAL_SERVER_ERROR).send((e as Error).message);
+  } catch (error) {
+    handleError(error as Error, req, res);
+    res.status(INTERNAL_SERVER_ERROR).send((error as Error).message);
   }
 };
 
@@ -44,8 +46,9 @@ export const create = async (req: ValidatedRequest<UserRequestSchema>, res: Resp
     const newUser = await UserService.create(user as BaseUser);
 
     res.status(CREATED).send(newUser);
-  } catch (e) {
-    res.status(INTERNAL_SERVER_ERROR).send((e as Error).message);
+  } catch (error) {
+    handleError(error as Error, req, res);
+    res.status(INTERNAL_SERVER_ERROR).send((error as Error).message);
   }
 };
 
@@ -62,8 +65,9 @@ export const update = async (req: ValidatedRequest<UserRequestSchema>, res: Resp
     }
 
     res.status(NOT_FOUND).send('User not found');
-  } catch (e) {
-    res.status(INTERNAL_SERVER_ERROR).send((e as Error).message);
+  } catch (error) {
+    handleError(error as Error, req, res);
+    res.status(INTERNAL_SERVER_ERROR).send((error as Error).message);
   }
 };
 
@@ -77,8 +81,9 @@ export const remove = async (req: Request, res: Response) => {
       return res.sendStatus(NO_CONTENT);
     }
     return res.status(NOT_FOUND).send('User not found');
-  } catch (e) {
-    res.status(INTERNAL_SERVER_ERROR).send((e as Error).message);
+  } catch (error) {
+    handleError(error as Error, req, res);
+    res.status(INTERNAL_SERVER_ERROR).send((error as Error).message);
   }
 };
 
@@ -94,8 +99,9 @@ export const getAutoSuggestUsers = async (req: ValidatedRequest<UserQuerySchema>
     if (users) {
       res.status(OK).send(sortedUsers.slice(0, limit));
     }
-  } catch (e) {
-    res.status(INTERNAL_SERVER_ERROR).send((e as Error).message);
+  } catch (error) {
+    handleError(error as Error, req, res);
+    res.status(INTERNAL_SERVER_ERROR).send((error as Error).message);
   }
 };
 
@@ -105,11 +111,13 @@ export const addUsersToGroup = async (req: ValidatedRequest<UsersToGroupRequestS
   try {
     UserService.addUsersToGroup(userIds, groupId).then(() => {
       res.status(OK).send();
-    }).catch((e) => {
-      res.status(INTERNAL_SERVER_ERROR).send((e as Error).message);
+    }).catch((error) => {
+      handleError(error as Error, req, res);
+      res.status(INTERNAL_SERVER_ERROR).send((error as Error).message);
     });
-  } catch (e) {
-    res.status(INTERNAL_SERVER_ERROR).send((e as Error).message);
+  } catch (error) {
+    handleError(error as Error, req, res);
+    res.status(INTERNAL_SERVER_ERROR).send((error as Error).message);
   }
 };
 

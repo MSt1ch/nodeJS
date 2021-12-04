@@ -1,3 +1,4 @@
+import {handleError} from '../error-hander/errorHandlers';
 import {Request, Response} from 'express';
 import {ValidatedRequest} from 'express-joi-validation';
 import {CREATED, INTERNAL_SERVER_ERROR, NO_CONTENT, NOT_FOUND, OK} from 'http-status';
@@ -12,8 +13,9 @@ export const getAll = async (req: Request, res: Response) => {
     const groups: Group[] = await GroupService.findAll();
 
     res.status(OK).send(groups);
-  } catch (e) {
-    res.status(INTERNAL_SERVER_ERROR).send((e as Error).message);
+  } catch (error) {
+    handleError(error as Error, req, res);
+    res.status(INTERNAL_SERVER_ERROR).send((error as Error).message);
   }
 };
 
@@ -28,8 +30,9 @@ export const getOne = async (req: Request, res: Response) => {
     }
 
     return res.status(NOT_FOUND).send('group not found');
-  } catch (e) {
-    res.status(INTERNAL_SERVER_ERROR).send((e as Error).message);
+  } catch (error) {
+    handleError(error as Error, req, res);
+    res.status(INTERNAL_SERVER_ERROR).send((error as Error).message);
   }
 };
 
@@ -40,8 +43,9 @@ export const create = async (req: ValidatedRequest<GroupRequestSchema>, res: Res
     const newGroup: GroupInstance | null = await GroupService.create(group as BaseGroup);
 
     res.status(CREATED).send(newGroup);
-  } catch (e) {
-    res.status(INTERNAL_SERVER_ERROR).send((e as Error).message);
+  } catch (error) {
+    handleError(error as Error, req, res);
+    res.status(INTERNAL_SERVER_ERROR).send((error as Error).message);
   }
 };
 
@@ -57,8 +61,9 @@ export const update = async (req: ValidatedRequest<GroupRequestSchema>, res: Res
     }
 
     return res.status(NOT_FOUND).send('group not found');
-  } catch (e) {
-    res.status(INTERNAL_SERVER_ERROR).send((e as Error).message);
+  } catch (error) {
+    handleError(error as Error, req, res);
+    res.status(INTERNAL_SERVER_ERROR).send((error as Error).message);
   }
 };
 
@@ -74,7 +79,8 @@ export const remove = async (req: Request, res: Response) => {
     }
 
     return res.status(NOT_FOUND).send('group not found');
-  } catch (e) {
-    res.status(INTERNAL_SERVER_ERROR).send((e as Error).message);
+  } catch (error) {
+    handleError(error as Error, req, res);
+    res.status(INTERNAL_SERVER_ERROR).send((error as Error).message);
   }
 };
