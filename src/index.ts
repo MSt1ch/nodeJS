@@ -11,6 +11,7 @@ import sq from './utils/sequelize';
 
 import usersRouter from './routes/user.router';
 import groupsRouter from './routes/group.router';
+import authenticateRouter from './routes/authenticate.router';
 
 dotenv.config();
 
@@ -42,6 +43,7 @@ app.use(validationErrorHandler);
 
 app.use('/api/users', usersRouter);
 app.use('/api/groups', groupsRouter);
+app.use('/api/login', authenticateRouter);
 
 
 process.on('uncaughtException', handleUncaughtError);
