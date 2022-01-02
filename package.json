@@ -4,7 +4,7 @@
   "description": "NodeJS course",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest --watch --detectOpenHandles",
     "start": "ts-node-dev --respawn --pretty --transpile-only src/index.ts",
     "build": "tsc",
     "init:data": "ts-node-dev --exit-child --transpile-only src/scripts/initTablesData.ts",
@@ -41,16 +41,20 @@
     "winston": "^3.3.3"
   },
   "devDependencies": {
+    "@babel/plugin-transform-modules-commonjs": "^7.16.5",
+    "@babel/preset-typescript": "^7.16.5",
     "@hapi/joi": "~15",
     "@types/cors": "^2.8.12",
     "@types/debug": "^4.1.7",
     "@types/dotenv": "^8.2.0",
     "@types/express": "^4.17.13",
     "@types/http-errors": "^1.8.1",
+    "@types/jest": "^27.0.3",
     "@types/jsonwebtoken": "^8.5.6",
     "@types/lodash": "^4.14.175",
     "@types/node": "^16.11.0",
     "@types/pg": "^8.6.1",
+    "@types/supertest": "^2.0.11",
     "@types/uuid": "^8.3.1",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",
@@ -60,9 +64,12 @@
     "eslint-plugin-import": "^2.25.2",
     "eslint-plugin-prettier": "^4.0.0",
     "express-joi-validation": "^5.0.0",
+    "jest": "^27.4.5",
     "joi-extract-type": "^15.0.8",
     "prettier": "^2.4.1",
     "sequelize-cli": "^6.3.0",
+    "supertest": "^6.1.6",
+    "ts-jest": "^27.1.2",
     "ts-node-dev": "^1.1.8",
     "typescript": "^4.4.4"
   }
