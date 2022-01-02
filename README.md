@@ -65,3 +65,15 @@ Task 1, 2, 4.
         GET:  /users/getautosuggestusers?limit=5&loginsubstring=a - get auto suggest users
         POST: /users - create user
         PUT:  /users/:id - update user
+
+
+### Homework 6
+
+    routes:
+        POST: /login - authorization
+
+    working body:
+        {
+            "login": "superAdmin",
+            "password": "sadmin5432"
+        }
