@@ -16,11 +16,11 @@ Task 1, 2, 3.
     Default port: 3000;
 
     routes:
-        GET:  /groups - find All groups
-        GET:  /groups/:id - find user by Id
-        POST:  /users/adduserstogroup - add users to group by Id
-        POST: /groups - create user
-        PUT:  /groups/:id - update user
+        GET:  api/groups - find All groups
+        GET:  api/groups/:id - find user by Id
+        POST: api/users/adduserstogroup - add users to group by Id
+        POST: api/groups - create group
+        PUT:  api/groups/:id - update group
 
 
 *** Example for adduserstogroup ***
@@ -43,11 +43,11 @@ Task 1, 2.
     Default port: 3000;
 
     routes:
-        GET:  /users - find All users
-        GET:  /users/:id - find user by Id
-        GET:  /users/getautosuggestusers?limit=5&loginsubstring=a - get auto suggest users
-        POST: /users - create user
-        PUT:  /users/:id - update user
+        GET:  api/users - find All users
+        GET:  api/users/:id - find user by Id
+        GET:  api/users/getautosuggestusers?limit=5&loginsubstring=a - get auto suggest users
+        POST: api/users - create user
+        PUT:  api/users/:id - update user
 
 ### Homework 2
 
@@ -60,20 +60,28 @@ Task 1, 2, 4.
     Default port: 3000;
 
     routes:
-        GET:  /users - find All users
-        GET:  /users/:id - find user by Id
-        GET:  /users/getautosuggestusers?limit=5&loginsubstring=a - get auto suggest users
-        POST: /users - create user
-        PUT:  /users/:id - update user
+        GET:  api/users - find All users
+        GET:  api/users/:id - find user by Id
+        GET:  api/users/getautosuggestusers?limit=5&loginsubstring=a - get auto suggest users
+        POST: api/users - create user
+        PUT:  api/users/:id - update user
 
 
 ### Homework 6
 
     routes:
-        POST: /login - authorization
+        POST: api/login - authorization
 
     working body:
         {
             "login": "superAdmin",
             "password": "sadmin5432"
         }
+
+
+### Homework 7
+
+    !For running use command!:
+    `yarn`  - install dependencies,
+    `yarn init:data` - add mock data to  the tables,
+    `yarn test` - testing app.

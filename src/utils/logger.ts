@@ -23,8 +23,9 @@ export const loggerMiddleware = (req: Request, res: Response, next: NextFunction
   res.on('finish', () => {
     logger.info(JSON.stringify({
       method: req.method,
-      url: req.url,
+      url: req.baseUrl,
       params: JSON.stringify(req.params),
+      headers: JSON.stringify(req.headers),
       body: JSON.stringify(req.body),
       statusCode: res.statusCode,
       statusMessage: res.statusMessage,
